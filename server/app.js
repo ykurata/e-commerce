@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const logger = require("morgan");
 const cors = require("cors");
+const config = require("./config");
 const app = express();
 
 app.use(logger('dev'));
@@ -12,8 +13,6 @@ app.get("/", (req, res) => {
   res.json("Connected");
 });
 
-
-const port = process.env.PORT || 5000;
-app.listen(port, () => console.log(`Server running on port ${port} !`));
+app.listen(config.PORT, () => console.log(`Server running on port ${config.PORT} !`));
 
 module.exports = app;

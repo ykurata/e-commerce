@@ -33,7 +33,7 @@ module.exports = function validateRegisterInput(data) {
   }
 
   return {
-    erros,
+    errors,
     isValid: isEmpty(errors)
   };
 };

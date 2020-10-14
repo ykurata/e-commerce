@@ -4,12 +4,16 @@ const bodyParser = require("body-parser");
 const logger = require("morgan");
 const cors = require("cors");
 const config = require("./config");
-const app = express();
+const dotenv = require("dotenv");
 
+
+const app = express();
 app.use(logger('dev'));
 app.use(bodyParser.json());
 
-const mongoURL = config.MONGODB_URL;
+dotenv.config();
+const mongodbUrl = config.MONGODB_URL;
+
 mongoose.connect(mongoURL, {
   useNewUrlParser: true,
   useUnifiedTopology: true,

@@ -12,8 +12,7 @@ const User = require("../models/User");
 // Register route
 router.post("/register", async (req, res) => {
   const { errors, isValid } = validateRegisterInput(req.body);
-
-  if (isValid) {
+  if (!isValid) {
     return res.status(400).json(errors);
   }
 
@@ -29,7 +28,7 @@ router.post("/register", async (req, res) => {
     });
 
     bcrypt.genSalt(10, (err, salt) => {
-      bcrypt.hash(newUser.password, slat, (err, hash) => {
+      bcrypt.hash(newUser.password, salt, (err, hash) => {
         if (err) throw err;
         newUser.password = hash;
         newUser.save();
@@ -48,30 +47,53 @@ router.post("/register", async (req, res) => {
 });
 
 // Login route
-router.post("/login", async (res, res) => {
+router.post("/login", async (req, res) => {
   const { errors, isValid } = validateLoginInput(req.body);
-
-  if (isValid) {
+  if (!isValid) {
     return res.status(400).json(errors);
   }
 
-  const user = await User.findOne({ email: req.body.email });
-  if (!user) {
-    return res.status(400).json({ error: "Email not found" });
-  } else {
-    bcrypt.compare(password, user.password).then((isMatch) => {
-      if (isMatch) {
-        const payload = {
-          id: user.id,
-          name: user.name
-        };
+  try {
+    const user = await User.findOne({ email: req.body.email });
+    if (!user) {
+      return res.status(400).json({ error: "Email not found" });
+    } else {
+      bcrypt.compare(req.body.password, user.password).then((isMatch) => {
+        if (isMatch) {
+          const payload = {
+            id: user.id,
+            name: user.name
+          };
 
-        jwt.sign(payload, config.SECRET_OR_KEY, { expiresIn: 31556926 }, (err, token) => {
-          res.json({ success: true, token: token });
-        });
-      } else {
-        return res.status(400).json({ error: "Password is incorrect" });
-      }
-    });
-  };
+          jwt.sign(payload, config.SECRET_OR_KEY, { expiresIn: 31556926 }, (err, token) => {
+            res.json({ success: true, token: token });
+          });
+        } else {
+          return res.status(400).json({ error: "Password is incorrect" });
+        }
+      })
+    };
+  } catch (err) {
+    console.log(err);
+  }
 });
+
+router.get("/all", async (req, res) => {
+  try {
+    const users = await User.find({});
+    return res.json(users);
+  } catch (err) {
+    console.log(err);
+  }
+});
+
+router.delete("/delete/:id", async (req, res) => {
+  try {
+    await User.remove({ _id: req.params.id });
+    return res.status(200).json({ message: "deleted a user" });
+  } catch (err) {
+    console.log(err);
+  }
+})
+
+module.exports = router;

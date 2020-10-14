@@ -46,3 +46,32 @@ router.post("/register", async (req, res) => {
     });
   };
 });
+
+// Login route
+router.post("/login", async (res, res) => {
+  const { errors, isValid } = validateLoginInput(req.body);
+
+  if (isValid) {
+    return res.status(400).json(errors);
+  }
+
+  const user = await User.findOne({ email: req.body.email });
+  if (!user) {
+    return res.status(400).json({ error: "Email not found" });
+  } else {
+    bcrypt.compare(password, user.password).then((isMatch) => {
+      if (isMatch) {
+        const payload = {
+          id: user.id,
+          name: user.name
+        };
+
+        jwt.sign(payload, config.SECRET_OR_KEY, { expiresIn: 31556926 }, (err, token) => {
+          res.json({ success: true, token: token });
+        });
+      } else {
+        return res.status(400).json({ error: "Password is incorrect" });
+      }
+    });
+  };
+});

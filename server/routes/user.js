@@ -40,7 +40,7 @@ router.post("/register", async (req, res) => {
         name: newUser.name
       };
 
-      jwt.sign(payload, config.SECRET_OR_KEY, { expiresIn: 31556926 }, (err, token) => {
+      jwt.sign(payload, config.JWT_KEY, { expiresIn: 31556926 }, (err, token) => {
         res.json({ success: true, token: token });
       });
     });
@@ -66,7 +66,7 @@ router.post("/login", async (req, res) => {
             name: user.name
           };
 
-          jwt.sign(payload, config.SECRET_OR_KEY, { expiresIn: 31556926 }, (err, token) => {
+          jwt.sign(payload, config.JWT_KEY, { expiresIn: 31556926 }, (err, token) => {
             res.json({ success: true, token: token });
           });
         } else {

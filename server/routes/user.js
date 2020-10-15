@@ -24,7 +24,8 @@ router.post("/register", async (req, res) => {
       name: req.body.name,
       email: req.body.email,
       password: req.body.password,
-      password2: req.body.password2
+      password2: req.body.password2,
+      isAdmin: req.body.isAdmin
     });
 
     bcrypt.genSalt(10, (err, salt) => {
@@ -73,6 +74,21 @@ router.post("/login", async (req, res) => {
         }
       })
     };
+  } catch (err) {
+    console.log(err);
+  }
+});
+
+router.put("/create-admin", async (req, res) => {
+  try {
+    const user = new User({
+      name: "Admin",
+      email: "admin@email.com",
+      password: "password",
+      isAdmin: true
+    });
+    const newUser = await user.save();
+    res.status(200).json(newUser);
   } catch (err) {
     console.log(err);
   }

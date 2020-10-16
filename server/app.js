@@ -7,6 +7,7 @@ const config = require("./config");
 const dotenv = require("dotenv");
 
 const userRoute = require("./routes/user");
+const productRoute = require("./routes/product");
 
 const app = express();
 app.use(logger('dev'));
@@ -14,6 +15,7 @@ app.use(bodyParser.json());
 
 // Routes
 app.use("/user", userRoute);
+app.use("/product", productRoute);
 
 // MongoDB set up
 dotenv.config();

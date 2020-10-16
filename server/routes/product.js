@@ -5,30 +5,28 @@ const isAdmin = require("./utils/isAdmin");
 const Product = require("../models/Product");
 
 router.get("/", async (req, res) => {
-  try {
-    const products = await Product.find({});
+  const products = await Product.find({});
+  if (products) {
     return res.status(200).json(products);
-  } catch (err) {
-    console.log(err);
   }
+  return res.status(404).json({ error: "Product not found" });
 });
 
 router.post("/", auth, isAdmin, async (req, res) => {
-  try {
-    const product = new Product({
-      name: req.body.name,
-      price: req.body.price,
-      image: req.body.image,
-      brand: req.body.brand,
-      category: req.body.category,
-      countInStock: req.body.countInStock,
-      description: req.body.description,
-    });
-    const newProduct = await product.save();
+  const product = new Product({
+    name: req.body.name,
+    price: req.body.price,
+    image: req.body.image,
+    brand: req.body.brand,
+    category: req.body.category,
+    countInStock: req.body.countInStock,
+    description: req.body.description,
+  });
+  const newProduct = await product.save();
+  if (newProduct) {
     return res.status(200).json(newProduct);
-  } catch (err) {
-    console.log(err);
   }
+  return res.status(500).json({ error: "Error in creating a product" });
 });
 
 module.exports = router;

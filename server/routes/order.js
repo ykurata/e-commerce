@@ -53,3 +53,26 @@ router.post("/", auth, async (req, res) => {
     console.log(err);
   }
 });
+
+// Update a order to make a payment
+router.put("/:id/pay", async (req, res) => {
+  const order = await Order.findById(req.params.id);
+  if (order) {
+    order.isPaid = true;
+    order.paidAt = new Date();
+    order.payment = {
+      paymentMethod: "paypal",
+      paymentResult: {
+        payerId: req.body.payerId,
+        orderId: req.body.orderId,
+        paymentId: req.body.paymentId
+      }
+    }
+    const updatedOrder = await order.save();
+    return res.status(200).json(updatedOrder);
+  } else {
+    res.status(404).send({ message: 'Order not found.' })
+  }
+});
+
+module.exports = router;

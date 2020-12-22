@@ -2,6 +2,9 @@ import React from 'react';
 import data from './data';
 import './App.css';
 
+import HomeScreen from './Screens/HomeScreen';
+import ProductScreen from './Screens/ProductScreen';
+
 function App() {
   const openMenu = () => {
     document.querySelector(".sidebar").classList.add("open");

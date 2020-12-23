@@ -3,8 +3,8 @@ import { Link } from 'react-router-dom';
 import data from '../data';
 
 const ProductScreen = (props) => {
-  console.log(props.match.params.id)
   const product = data.products.find(x => x._id === props.match.params.id);
+  console.log(product.image)
   return <div>
     <div>
       <Link to="/">Back to result</Link>

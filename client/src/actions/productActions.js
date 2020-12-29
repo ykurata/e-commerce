@@ -1,4 +1,12 @@
-import { PRODUCT_LIST_FAIL, PRODUCT_LIST_REQUEST, PRODUCT_LIST_SUCCESS } from "../constants/productConstants"
+import {
+  PRODUCT_LIST_FAIL,
+  PRODUCT_LIST_REQUEST,
+  PRODUCT_LIST_SUCCESS,
+  PRODUCT_DETAILES_SUCCESS,
+  PRODUCT_DETAILES_REQUEST,
+  PRODUCT_DETAILES_FAIL,
+} from "../constants/productConstants"
+
 
 import axios from 'axios';
 

@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { detailsProduct } from '../actions/productActions';
 
 const ProductScreen = (props) => {
-
+  const [qty, setQty] = useState(1);
   const productDetails = useSelector(state => state.productDetails);
   const { product, loading, error } = productDetails;
   const dispatch = useDispatch();
@@ -57,11 +57,10 @@ const ProductScreen = (props) => {
                   Status: {product.status}
                 </li>
                 <li>
-                  Qty: <select>
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
-                    <option>4</option>
+                  Qty: <select value={qty} onChange={(e) => { setQty(e.target.value) }} >
+                    {[...Array(product.countInStock).keys()].map(x =>
+                      <option key={x + 1} value={x + 1}>{x + 1}</option>
+                    )}
                   </select>
                 </li>
                 <li>

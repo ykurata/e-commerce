@@ -10,7 +10,7 @@ const ProductScreen = (props) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(detailsProduct());
+    dispatch(detailsProduct(props.match.params.id));
     return () => {
 
     }

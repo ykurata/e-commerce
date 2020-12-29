@@ -2,9 +2,9 @@ import {
   PRODUCT_LIST_FAIL,
   PRODUCT_LIST_REQUEST,
   PRODUCT_LIST_SUCCESS,
-  PRODUCT_DETAILES_SUCCESS,
-  PRODUCT_DETAILES_REQUEST,
-  PRODUCT_DETAILES_FAIL,
+  PRODUCT_DETAILS_SUCCESS,
+  PRODUCT_DETAILS_REQUEST,
+  PRODUCT_DETAILS_FAIL,
 } from "../constants/productConstants"
 
 
@@ -22,11 +22,11 @@ const listProducts = () => async (dispatch) => {
 
 const detailsProduct = (productId) => async (dispatch) => {
   try {
-    dispatch({ type: PRODUCT_DETAILES_REQUEST, payload: productId });
+    dispatch({ type: PRODUCT_DETAILS_REQUEST, payload: productId });
     const { data } = await axios.get('/products/' + productId);
-    dispatch({ type: PRODUCT_DETAILES_SUCCESS, payload: data });
+    dispatch({ type: PRODUCT_DETAILS_SUCCESS, payload: data });
   } catch (error) {
-    dispatch({ type: PRODUCT_DETAILES_FAIL, payload: error.message });
+    dispatch({ type: PRODUCT_DETAILS_FAIL, payload: error.message });
   }
 }
 

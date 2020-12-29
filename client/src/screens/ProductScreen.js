@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { detailsProduct } from '../actions/productActions';
+import { productDetailsReducer } from '../reducers/productReducers';
 
 const ProductScreen = (props) => {
   const [qty, setQty] = useState(1);
@@ -15,6 +16,10 @@ const ProductScreen = (props) => {
 
     }
   }, [])
+
+  const handleAddToCart = () => {
+    props.history.push('/cart/' + props.match.params.id + '?qty=' + qty);
+  }
 
   return <div>
     <div className="back-to-result">
@@ -54,7 +59,7 @@ const ProductScreen = (props) => {
                   Price: {product.price}
                 </li>
                 <li>
-                  Status: {product.status}
+                  Status: {product.countInStock > 0 ? "In Stock" : "Unavailable"}
                 </li>
                 <li>
                   Qty: <select value={qty} onChange={(e) => { setQty(e.target.value) }} >
@@ -64,7 +69,9 @@ const ProductScreen = (props) => {
                   </select>
                 </li>
                 <li>
-                  <button className="button">Add to Cart</button>
+                  {product.countInStock > 0 && (
+                    <button onClick={handleAddToCart} className="button">Add to Cart</button>
+                  )}
                 </li>
               </ul>
             </div>

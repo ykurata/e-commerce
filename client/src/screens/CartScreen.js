@@ -1,8 +1,7 @@
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { addToCart } from '../actions/cartActions';
-import { cartReducer } from '../reducers/cartReducers';
+import { addToCart, removeFromCart } from '../actions/cartActions';
 
 function CartScreen(props) {
 
@@ -19,7 +18,11 @@ function CartScreen(props) {
     if (productId) {
       dispatch(addToCart(productId, qty));
     }
-  }, [])
+  }, []);
+
+  const checkOutHandler = () => {
+    props.history.push("/signin?redirect=shipping");
+  }
 
   return <div className="cart">
     <div className="cart-list">
@@ -49,7 +52,7 @@ function CartScreen(props) {
                 </div>
                 <div>
                   Qty:
-                  <select>
+                  <select value={item.qty} onChange={(e) => dispatch(addToCart(item.product, e.target.value))}>
                     <option value="1">1</option>
                     <option value="2">2</option>
                     <option value="3">3</option>
@@ -70,7 +73,7 @@ function CartScreen(props) {
         :
         $ {cartItems.reduce((a, c) => a + c.price * c.qty, 0)}
       </h3>
-      <button className="button primary" disabled={cartItems.length === 0}>
+      <button onClick={checkOutHandler} className="button primary" disabled={cartItems.length === 0}>
         Proceed to Checkout
       </button>
     </div>

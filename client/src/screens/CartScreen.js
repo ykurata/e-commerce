@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { addToCart } from '../actions/cartActions';
 import { cartReducer } from '../reducers/cartReducers';
@@ -10,6 +11,9 @@ function CartScreen(props) {
   const productId = props.match.params.id;
   const qty = props.location.search ? Number(props.location.search.split("=")[1]) : 1;
   const dispatch = useDispatch();
+  const removeFromCartHandler = (productId) => {
+    dispatch(removeFromCart(productId));
+  }
 
   useEffect(() => {
     if (productId) {
@@ -32,10 +36,16 @@ function CartScreen(props) {
           cartItems.length === 0 ?
             <div>Cart is empty</div>
             : cartItems.map(item =>
-              <div>
-                <img src={item.image} alt='product' />
-                <div>
-                  {item.name}
+              <li>
+                <div className="cart-image">
+                  <img src={item.image} alt='product' />
+                </div>
+                <div className="cart-name">
+                  <div>
+                    <Link to={"/product/" + item.product}>
+                      {item.name}
+                    </Link>
+                  </div>
                 </div>
                 <div>
                   Qty:
@@ -44,16 +54,17 @@ function CartScreen(props) {
                     <option value="2">2</option>
                     <option value="3">3</option>
                   </select>
+                  <button type="button" className="button" onClick={() => removeFromCartHandler(item.product)}>Delete</button>
                 </div>
-                <div>
-                  {item.price}
+                <div className="cart-price">
+                  $ {item.price}
                 </div>
-              </div>
+              </li>
             )
         }
       </ul>
     </div>
-    <div clasName="cart-action">
+    <div className="cart-action">
       <h3>
         Subtotal ( {cartItems.reduce((a, c) => a + c.qty, 0)} items)
         :

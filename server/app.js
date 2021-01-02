@@ -16,7 +16,7 @@ app.use(bodyParser.json());
 
 // Routes
 app.use("/user", userRoute);
-app.use("/product", productRoute);
+app.use("/products", productRoute);
 app.use("/order", orderRoute);
 
 // MongoDB set up

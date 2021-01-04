@@ -9,6 +9,21 @@ const validateLoginInput = require("../validation/login");
 
 const User = require("../models/User");
 
+router.get('/createAdmin', async (req, res) => {
+  try {
+    const user = new User({
+      name: 'Admin',
+      email: 'admin@email.com',
+      password: '1234',
+      isAdmin: true
+    });
+    const newUser = await user.save();
+    res.send(newUser);
+  } catch (error) {
+    res.send({ msg: error.message });
+  }
+});
+
 // Register route
 router.post("/register", async (req, res) => {
   const { errors, isValid } = validateRegisterInput(req.body);
@@ -79,20 +94,20 @@ router.post("/login", async (req, res) => {
   }
 });
 
-router.put("/create-admin", async (req, res) => {
-  try {
-    const user = new User({
-      name: "Admin",
-      email: "admin@email.com",
-      password: "password",
-      isAdmin: true
-    });
-    const newUser = await user.save();
-    res.status(200).json(newUser);
-  } catch (err) {
-    console.log(err);
-  }
-});
+// router.put("/create-admin", async (req, res) => {
+//   try {
+//     const user = new User({
+//       name: "Admin",
+//       email: "admin@email.com",
+//       password: "password",
+//       isAdmin: true
+//     });
+//     const newUser = await user.save();
+//     res.status(200).json(newUser);
+//   } catch (err) {
+//     console.log(err);
+//   }
+// });
 
 router.get("/all", async (req, res) => {
   try {

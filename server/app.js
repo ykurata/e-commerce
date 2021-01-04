@@ -28,15 +28,15 @@ mongoose.connect(mongodbUrl, {
   useUnifiedTopology: true,
   useCreateIndex: true
 });
-const db = mongoose.connection;
+// const db = mongoose.connection;
 
-db.on("error", (err) => {
-  console.error("connection error:", error);
-});
+// db.on("error", (err) => {
+//   console.error("connection error:", error);
+// });
 
-db.once("open", () => {
-  console.log("MongoDB connection successful");
-});
+// db.once("open", () => {
+//   console.log("MongoDB connection successful");
+// });
 
 app.listen(config.PORT, () => console.log(`Server running on port ${config.PORT} !`));
 

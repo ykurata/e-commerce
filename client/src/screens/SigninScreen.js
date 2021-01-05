@@ -17,7 +17,7 @@ const SigninScreen = (props) => {
 
   const submitHandler = e => {
     e.preventDefault();
-
+    dispatch(signin(email, password));
   }
 
 

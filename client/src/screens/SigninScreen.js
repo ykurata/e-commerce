@@ -25,6 +25,9 @@ const SigninScreen = (props) => {
     <form onSubmit={submitHandler}>
       <ul className="form-container">
         <li>
+          <h2>Sign In</h2>
+        </li>
+        <li>
           <label for="email">
             Email
           </label>
@@ -37,13 +40,13 @@ const SigninScreen = (props) => {
           <input type="password" name="password" id="password" onChange={(e) => setPassword(e.target.value)}></input>
         </li>
         <li>
-          <button type="submit" className="button-primary">Signin</button>
+          <button type="submit" className="button primary">Signin</button>
         </li>
         <li>
           New to amazona?
         </li>
         <li>
-          <Link to="/register" className="button full-width">Create your amazona account</Link>
+          <Link to="/register" className="button secondary text-center">Create your amazona account</Link>
         </li>
       </ul>
     </form>

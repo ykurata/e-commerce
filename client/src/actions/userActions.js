@@ -6,11 +6,22 @@ const signin = (email, password) => async (dispatch) => {
   dispatch({ type: USER_SIGNIN_REQUEST, payload: { email, password } });
   try {
     const { data } = await axios.post('/user/signin', { email, password });
-    dispatch({ type: USER_SIGNIN_REQUEST, payload: data });
+    dispatch({ type: USER_SIGNIN_SUCCESS, payload: data });
     Cookie.set('userInfo', JSON.stringify(data));
   } catch (error) {
     dispatch({ type: USER_SIGNIN_FAIL, payload: error.message });
   }
 }
 
-export { signin }
+const register = (name, email, password) => async (dispatch) => {
+  dispatch({ type: USER_REGISTER_REQUEST, payload: { name, email, password } });
+  try {
+    const { data } = await axios.post('/user/register', { email, password });
+    dispatch({ type: USER_REGISTER_REQUEST, payload: data });
+    Cookie.set('userInfo', JSON.stringify(data));
+  } catch (error) {
+    dispatch({ type: USER_REGISTER_FAIL, payload: error.message });
+  }
+}
+
+export { signin, register }

@@ -1,4 +1,5 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import { BrowserRouter, Route, Link } from 'react-router-dom';
 import './App.css';
 
@@ -8,6 +9,10 @@ import CartScreen from './screens/CartScreen';
 import SigninScreen from './screens/SigninScreen';
 
 function App() {
+
+  const userSignin = useSelector(state => state.userSignin);
+  const { userInfo } = userSignin;
+
   const openMenu = () => {
     document.querySelector(".sidebar").classList.add("open");
   }
@@ -26,11 +31,14 @@ function App() {
             </button>
             <Link to="/">amazona</Link>
           </div>
-          <div className="header-link">
+          <div className="header-links">
             <a href="cart.html">Cart</a>
-            <Link to="/signin">
-              Sign In
-            </Link>
+            {userInfo ? (
+              <Link to='/profile'>{userInfo.name}</Link>
+            ) : (
+                <Link to="/signin">Sign In</Link>
+              )}
+
           </div>
         </header>
         <aside className="sidebar">

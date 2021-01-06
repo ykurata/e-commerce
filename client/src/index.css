@@ -41,11 +41,12 @@ button {
   font-weight: bold;
   text-decoration: none;
 }
-.header-link a{
+.header-links a{
   color: #ffffff;
   text-decoration: none;
+  padding-right: 2rem;
 }
-.header-link a:hover {
+.header-links a:hover {
   color: #ff8000;
 }
 .main {

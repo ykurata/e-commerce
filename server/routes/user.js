@@ -3,9 +3,7 @@ const router = express.Router();
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const config = require("../config");
-
-const validateRegisterInput = require("../validation/register");
-const validateLoginInput = require("../validation/login");
+const getToken = require('../utils');
 
 const User = require("../models/User");
 
@@ -20,7 +18,7 @@ router.post('/signin', async (req, res) => {
       name: signinUser.name,
       email: signinUser.email,
       isAdmin: signinUser.isAdmin,
-      token: getToken(user)
+      token: getToken(signinUser)
     });
   } else {
     req.status(401).send({ msg: 'Invalid Email or Password' });

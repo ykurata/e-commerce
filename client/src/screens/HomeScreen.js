@@ -23,7 +23,7 @@ const HomeScreen = (props) => {
 
         <ul className="products">
           {
-            data.products.map(product =>
+            products.map(product =>
               <li key={product._id}>
                 <div className="product">
                   <Link to={'/product/' + product._id}>

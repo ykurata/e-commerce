@@ -1,19 +1,25 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { signin } from '../actions/userActions';
+import { userSigninReducer } from '../reducers/userReducers';
 
 const SigninScreen = (props) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const userSignin = useSelector(state => state.userSignin);
+  const { loading, userInfo, error } = userSignin;
 
   const dispatch = useDispatch();
 
   useEffect(() => {
-
+    if (userInfo) {
+      props.history.push('/');
+    }
     return () => {
 
     }
-  }, [])
+  }, [userInfo])
 
   const submitHandler = e => {
     e.preventDefault();
@@ -28,13 +34,17 @@ const SigninScreen = (props) => {
           <h2>Sign In</h2>
         </li>
         <li>
-          <label for="email">
+          {loading && <div>Loading...</div>}
+          {error && <div>{error}</div>}
+        </li>
+        <li>
+          <label htmlFor="email">
             Email
           </label>
           <input type="email" name="email" id="email" onChange={(e) => setEmail(e.target.value)}></input>
         </li>
         <li>
-          <label for="email">
+          <label htmlFor="email">
             Password
           </label>
           <input type="password" name="password" id="password" onChange={(e) => setPassword(e.target.value)}></input>

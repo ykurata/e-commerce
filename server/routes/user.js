@@ -23,7 +23,29 @@ router.post('/signin', async (req, res) => {
   } else {
     req.status(401).send({ msg: 'Invalid Email or Password' });
   }
-})
+});
+
+router.post('/register', async (req, res) => {
+  const user = new User({
+    name: req.body.name,
+    email: req.body.email,
+    password: req.body.password
+  });
+
+  const newUser = await user.save();
+
+  if (newUser) {
+    res.send({
+      id: newUser._id,
+      name: newUser.name,
+      email: newUser.email,
+      isAdmin: newUser.isAdmin,
+      token: getToken(newUser)
+    });
+  } else {
+    req.status(401).send({ msg: 'Invalid User Data' });
+  }
+});
 
 router.get('/createAdmin', async (req, res) => {
   try {

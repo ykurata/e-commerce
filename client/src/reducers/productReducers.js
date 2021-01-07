@@ -49,4 +49,17 @@ function productSaveReducer(state = { product: {} }, action) {
   }
 }
 
-export { productListReducer, productDetailsReducer, productSaveReducer };
+function productDeleteReducer(state = { product: {} }, action) {
+  switch (action.type) {
+    case PRODUCT_DELETE_REQUEST:
+      return { loading: true };
+    case PRODUCT_DELETE_SUCCESS:
+      return { loading: false, product: action.payload, success: true };
+    case PRODUCT_DELETE_FAIL:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+}
+
+export { productListReducer, productDetailsReducer, productSaveReducer, productDeleteReducer };
